@@ -14,7 +14,6 @@ notes.get('/', async (req, res) => {
 
 notes.get('/:id', async (req, res) => {
     const requestedNote = req.params.id.toLowerCase();
-    console.info(req.method + " requested note: " + requestedNote);
 
     // read all notes from db
     const data = await readFromFile(path.join(__dirname, '../db/db.json'));
@@ -22,7 +21,6 @@ notes.get('/:id', async (req, res) => {
 
     // filter notes on id
     const matchingNote = allNotes.filter(note => note.id === requestedNote);
-    console.debug(matchingNote);
     if (matchingNote) {
         return res.status(200).json(matchingNote);
     } else {
@@ -31,8 +29,6 @@ notes.get('/:id', async (req, res) => {
 });
 
 notes.post('/', (req, res) => {
-    console.info(`${req.method} request received to add note`);
-
     // Destructuring assignment for the items in req.body
     const { title, text } = req.body;
 
@@ -58,7 +54,6 @@ notes.post('/', (req, res) => {
 
 notes.delete('/:id', async (req, res) => {
     const noteToDelete = req.params.id.toLowerCase();
-    console.info(req.method + " note to delete: " + noteToDelete);
 
     // read all notes from db
     const data = await readFromFile(path.join(__dirname, '../db/db.json'));
@@ -66,7 +61,6 @@ notes.delete('/:id', async (req, res) => {
 
     // filter notes on id
     const filteredNotes = allNotes.filter(note => note.id !== noteToDelete);
-    console.debug(filteredNotes);
     if (filteredNotes.length === allNotes.length - 1) {
         writeToFile(path.join(__dirname, '../db/db.json'), filteredNotes);
         return res.status(200).json(filteredNotes);
