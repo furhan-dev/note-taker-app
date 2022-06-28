@@ -12,6 +12,19 @@ notes.get('/', async (req, res) => {
     res.json(JSON.parse(data));
 });
 
+notes.get('/:id', async (req, res) => {
+    const requestedNote = req.params.id.toLowerCase();
+    console.info(req.method + " requested note: " + requestedNote);
+    const data = await readFromFile(path.join(__dirname, '../db/db.json'));
+    const allNotes = JSON.parse(data);
+    const matchingNote = allNotes.filter(note => note.id === req.params.id.toLowerCase());
+    if (matchingNote) {
+        return res.json(matchingNote);
+    } else {
+        res.status(404).json("Note not found!");
+    }
+});
+
 notes.post('/', (req, res) => {
     console.info(`${req.method} request received to add note`);
 
@@ -34,7 +47,7 @@ notes.post('/', (req, res) => {
 
         res.json(response);
     } else {
-        res.json('Error in saving note');
+        res.status(500).json('Error in saving note');
     }
 });
 
