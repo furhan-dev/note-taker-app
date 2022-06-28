@@ -15,11 +15,16 @@ notes.get('/', async (req, res) => {
 notes.get('/:id', async (req, res) => {
     const requestedNote = req.params.id.toLowerCase();
     console.info(req.method + " requested note: " + requestedNote);
+
+    // read all notes from db
     const data = await readFromFile(path.join(__dirname, '../db/db.json'));
     const allNotes = JSON.parse(data);
-    const matchingNote = allNotes.filter(note => note.id === req.params.id.toLowerCase());
+
+    // filter notes on id
+    const matchingNote = allNotes.filter(note => note.id === requestedNote);
+    console.debug(matchingNote);
     if (matchingNote) {
-        return res.json(matchingNote);
+        return res.status(200).json(matchingNote);
     } else {
         res.status(404).json("Note not found!");
     }
@@ -48,6 +53,25 @@ notes.post('/', (req, res) => {
         res.json(response);
     } else {
         res.status(500).json('Error in saving note');
+    }
+});
+
+notes.delete('/:id', async (req, res) => {
+    const noteToDelete = req.params.id.toLowerCase();
+    console.info(req.method + " note to delete: " + noteToDelete);
+
+    // read all notes from db
+    const data = await readFromFile(path.join(__dirname, '../db/db.json'));
+    const allNotes = JSON.parse(data);
+
+    // filter notes on id
+    const filteredNotes = allNotes.filter(note => note.id !== noteToDelete);
+    console.debug(filteredNotes);
+    if (filteredNotes.length === allNotes.length - 1) {
+        writeToFile(path.join(__dirname, '../db/db.json'), filteredNotes);
+        return res.status(200).json(filteredNotes);
+    } else {
+        res.status(404).json("Note not found!");
     }
 });
 
