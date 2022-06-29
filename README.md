@@ -4,6 +4,8 @@
 ## Description
 A simple note taking app using Express.js that will save, retrieve, and delete note data from a JSON file.
 
+Live web app can be found [here](https://rocky-bastion-35303.herokuapp.com)
+
 ![Screenshot](/public/assets/images/screenshot.png)
 
 ## Table of Contents
