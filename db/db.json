@@ -1,7 +1,17 @@
 [
     {
-        "id": 23423423,
-        "title":"Test Title",
-        "text":"Test text"
+        "title": "Grocery list",
+        "text": "Bananas\nCoffee\nMilk",
+        "id": "88ce7cca-1fbb-4dff-a167-eb63ddd0214c"
+    },
+    {
+        "title": "Chores",
+        "text": "Dishes\nLaundry\nVacuum",
+        "id": "3724b457-0e39-4cf9-b049-826994362947"
+    },
+    {
+        "title": "6/20/22",
+        "text": "- Pickup dry cleaning\n- Workout\n- Grocery shop",
+        "id": "f6499a3d-64ad-4983-9eca-137fe733f0a4"
     }
 ]
